@@ -595,6 +595,9 @@ _.map = function(collection, func){
 
 
 /** _.reduce
+ * 
+ * WATCH VIDS IN SHARED DOC 
+ * 
 * Arguments:
 *   1) An array
 *   2) A function

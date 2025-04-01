@@ -21,6 +21,19 @@ var _ = {};
 *   _.identity({a: "b"}) === {a: "b"}
 */
 
+/*
+
+I: value
+O: return value unchanged
+C: 
+E: 
+
+*/
+
+
+_.identity = function(value){
+    return value;
+};
 
 /** _.typeOf
 * Arguments:
@@ -42,6 +55,49 @@ var _ = {};
 * _.typeOf([1,2,3]) -> "array"
 */
 
+/*
+
+I: value
+O: string of what type the value is
+C: 
+E: 
+
+*/
+
+_.typeOf = function(value){
+    if(typeof value === 'string'){
+        return 'string';
+
+    } else if (typeof value === 'undefined'){
+        return 'undefined';
+
+    } else if (typeof value === 'number'){
+        return 'number';
+
+    } else if (typeof value === 'boolean'){
+        return 'boolean';
+
+    } else if (typeof value === 'function'){
+        return 'function';
+
+    } else if (typeof value === 'object'){
+        if (value === null){
+            return 'null';
+
+        } else if (Array.isArray(value) === true){
+            return 'array';
+
+        } else if (value instanceof Date){
+            return 'date';
+
+        } else {
+            return 'object';
+
+        }
+    }
+
+};
+
 
 /** _.first
 * Arguments:
@@ -60,6 +116,39 @@ var _ = {};
 *   _.first(["a", "b", "c"], 1) -> "a"
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
+
+/*
+
+I: an array and a number
+O: 
+C: 
+E: 
+
+*/
+
+_.first = function(array, num){
+    let output = [];
+
+    if(Array.isArray(array) === false || num < 0){
+        return [];
+    } else if(num === NaN || num === undefined || num === 1){
+        return array[0];
+
+    } else if (num > 1){
+        if(num > array.length){
+            for(let i = 0; i < array.length; i++){
+                output.push(array[i]);
+            }
+            return output;
+
+        } else if(num < array.length){
+            for(let j = 0; j < num; j++){
+                output.push(array[j]);
+            }
+            return output;
+        }
+    }
+}
 
 
 /** _.last
@@ -80,6 +169,49 @@ var _ = {};
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+/*
+
+I: array and number
+O: empty array or last element in array
+C: 
+E: negative number number greater than array.length
+
+*/
+
+_.last = function(array, num){
+    // holder for multiple values
+    let output = [];
+
+    if(Array.isArray(array) === false || num < 0){
+        return [];
+
+    } else if (!num){
+        return array[array.length - 1]
+
+    } else {
+        // number is less than array length
+        if (num < array.length){
+            // begin at num -1 index and loop to end of array.length
+            for(let i = num - 1; i < array.length; i++){
+                output.push(array[i]);
+            }
+
+        } else {
+            // if number is larger than array.length, return all items (do not go by num)
+            for(let i = 0; i < array.length; i++){
+                output.push(array[i]);
+            }
+
+        }
+    }
+    if (array.length === 1){
+        return array[array.length - 1];
+    } else {
+        return output;
+    }
+    
+}
+
 
 /** _.indexOf
 * Arguments:
@@ -96,7 +228,25 @@ var _ = {};
 *   _.indexOf(["a","b","c"], "c") -> 2
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
+/*
 
+I: an array and a value
+O: index of array that is the FIRST occurance of value, -1 IF value is not array, 
+C: 
+E: multiple occurances? doesn't matter need first. what if val isn't in the array? -1
+
+*/
+
+
+_.indexOf = function(array, value){
+    for(let i = 0; i < array.length; i++){
+        // first index to match value, returns index number
+        if(array[i] === value){
+            return i;
+        }
+    }
+    return -1;
+}
 
 /** _.contains
 * Arguments:
@@ -113,6 +263,24 @@ var _ = {};
 *   _.contains([1,"two", 3.14], "two") -> true
 */
 
+/*
+
+I: array and value
+O: boolean of true or false
+C: 
+E: 
+
+*/
+
+
+_.contains = function(array, value){
+    for(let i = 0; i < array.length; i++){
+        if (array[i] === value){
+            return true;
+        }
+    }
+    return false;
+}
 
 /** _.each
 * Arguments:
@@ -130,6 +298,30 @@ var _ = {};
 *      -> should log "a" "b" "c" to the console
 */
 
+/*
+
+I: collection (array or object); function
+O: call function on each array index or object key value
+C: 
+E: 
+
+*/
+
+_.each = function(collection, func){
+    // array?
+    if(Array.isArray(collection)){
+        for(let i = 0; i < collection.length; i++){
+            func(collection[i], i, collection);
+        }
+
+    } else { // assumes it is an object
+        for(var key in collection){
+            func(collection[key], key, collection);
+        }
+    }
+}
+
+
 
 /** _.unique
 * Arguments:
@@ -141,6 +333,33 @@ var _ = {};
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
 
+/*
+
+I: array
+O: new array of elements without dupes
+C: use _.indexOf()
+E: 
+
+*/
+
+_.unique = function(array){
+    // new array to return
+    let output = [];
+    // for loop to itterate through array
+    for(let i = 0; i < array.length; i++){
+        if(_.indexOf(array, array[i]) === -1){
+            output.push(array[i]);
+        } else if(_.indexOf(array, array[i]) === i){
+            output.push(array[i]);
+        }
+    }
+
+
+    return output;
+}
+
+// console.log(_.indexOf(["a", 1, 1, "a", "c", false, "b", 5, "c", null, false, null], 'a'))
+// console.log(_.unique(["a", 1, 1, "a", "c", false, "b", 5, "c", null, false, null]))
 
 /** _.filter
 * Arguments:
@@ -158,6 +377,16 @@ var _ = {};
 *   use _.each in your implementation
 */
 
+_.filter = function(array, func){
+    let newArr = [];
+    for(let i = 0; i < array.length; i++){
+        if(func(array[i], i, array)){
+            newArr.push(array[i]);
+        } 
+    }
+    return newArr;
+};
+
 
 /** _.reject
 * Arguments:
@@ -171,6 +400,25 @@ var _ = {};
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+
+/*
+
+I: array
+O: function
+C: 
+E: 
+
+*/
+
+_.reject = function(array, func){
+    let output = [];
+    for(let i = 0; i < array.length; i++){
+        if(!func(array[i], i, array)){
+            output.push(array[i]);
+        } 
+    }
+    return output;
+}
 
 
 /** _.partition
@@ -192,10 +440,32 @@ var _ = {};
 }
 */
 
+/*
+
+I: array & function
+O: array that contains two arrays
+C: 
+E: an array of arrays
+
+*/
+
+_.partition = function(array, func){
+    let output = [ [], [] ];
+    for(let i = 0; i < array.length; i++){
+        if(func(array[i], i, array)){
+            output[0].push(array[i]);
+        } else {
+            output[1].push(array[i]);
+        }
+    }
+    return output;
+}
+
+// console.log(_.partition([1,2,3,4,5], function(element,index,arr){ return element % 2 === 0; }));
 
 /** _.map
 * Arguments:
-*   1) A collection
+*   1) A collection // array OR object
 *   2) a function
 * Objectives:
 *   1) call <function> for each element in <collection> passing the arguments:
@@ -209,6 +479,30 @@ var _ = {};
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+_.map = function(collection, func){
+    let output = [];
+    // if array
+    if(Array.isArray(collection)){
+        for(let i = 0; i < collection.length; i++){
+            if(func(collection[i], i, collection)){
+                output.push(func(collection[i], i, collection));
+            }
+        }
+    } else { // else object
+        for(let key in collection){
+           if(func(collection[key], key, collection)){
+                output.push(func(collection[key], key, collection));
+           } 
+        }
+    }
+    return output;
+    
+};
+
+
+// console.log(_.map([1,2,3,4], function(e){return e * 2})); // [2, 4, 6, 8]
+
+// console.log(_.map({ a: 1, b: 2 }, function(e){ return e * 2})); // [2, 4]
 
 /** _.pluck
 * Arguments:
@@ -221,6 +515,9 @@ var _ = {};
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 
+// _.pluck = function(){
+
+// };
 
 /** _.every
 * Arguments:
@@ -243,6 +540,37 @@ var _ = {};
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
 
+// _.every = function(){
+//     if(Array.isArray(collection)){
+//         // determine if func wasn't provided
+//         if (){
+
+//         } else { // else callback func
+
+//         }
+//     } else {
+//         // determine if func wasn't provided
+//         if (){
+
+//         } else { // else callback func
+
+//         }
+//     }
+// }
+
+
+// _.every([2, 4, 6], function(num){ return num % 2 === 0}); // returns true because every number is even
+// _.every([2, 5, 6], function(num){ return num % 2 === 0}); // returns false because one number is not even
+
+// _.every({ a: 2, b: 4 }, function(num){ return num % 2 === 0}); // returns true because every value is even
+// _.every({ a: 2, b: 3}, function(num) { return num % 2 === 0}); // returns false because one value is not even
+
+// // examples where there is no test function
+// _.every([2, 4, 6]); // true because element is truthy
+// _.every([2, null, 6]); // false because one of the elements is not truthy
+
+// _.every({ a: 2, b: 4}); // true because each value is truthy
+// _.every({ a: 2, b: null }); // false because one value is not truthy
 
 /** _.some
 * Arguments:

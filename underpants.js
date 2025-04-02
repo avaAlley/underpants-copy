@@ -515,9 +515,35 @@ _.map = function(collection, func){
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 
-// _.pluck = function(){
+/*
 
+I: array of objects, a property
+O: an array containing the value of the property for every element in the array
+C: must use _.map()
+E: 
+
+*/
+
+
+_.pluck = function(array, property){
+    // let output = [];
+    return _.map(array, function(object){
+        return array[property];
+    });
+    // return output;
+};
+
+// _.pluck = function(array, property){
+//     // holder for output array property values
+//     let output = []
+
+//     // iterate through array to access each object
+//     for(let i = 0; i < array.length; i++){
+//         output.push(array[i][property]);
+//     }
+//     return output;
 // };
+
 
 /** _.every
 * Arguments:
@@ -538,6 +564,15 @@ _.map = function(collection, func){
 * Examples:
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
+*/
+
+/*
+
+I: 
+O: 
+C: 
+E: 
+
 */
 
 // _.every = function(){

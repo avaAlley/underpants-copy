@@ -567,29 +567,50 @@ _.pluck = function(array, property){
 /*
 
 I: a collection (array or object) and a function
-O: 
+O: boolean of true or false
 C: 
 E: 
 
 */
 
-// _.every = function(){
-//     if(Array.isArray(collection)){
-//         // determine if func wasn't provided
-//         if (){
-
-//         } else { // else callback func
-
-//         }
-//     } else {
-//         // determine if func wasn't provided
-//         if (){
-
-//         } else { // else callback func
-
-//         }
-//     }
-// }
+_.every = function(collection, func){
+    if(Array.isArray(collection)){
+        // determine if func wasn't provided
+        if (func === undefined){
+            for(let i = 0; i < collection.length; i++){
+                if(!collection[i]){
+                    return false;
+                }
+                return true;
+            }
+        } else { // else callback func
+            for(let i = 0; i < collection.length; i++){
+                if(!func(collection[i], i, collection)){
+                    return false;
+                }
+            }
+            return true;
+        }
+    } else {
+        // determine if func wasn't provided
+        if (func === undefined){
+            for(let key in collection){
+                if(!collection[key]){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        } else { // else callback func
+            for(let key in collection){
+                if(!func(collection[key], key, collection)){
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}
 
 
 // _.every([2, 4, 6], function(num){ return num % 2 === 0}); // returns true because every number is even
@@ -626,6 +647,54 @@ E:
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
 
+/*
+
+I: a collection and function
+O: boolean value of true or false
+C: 
+E: 
+
+*/
+
+_.some = function(collection, func){
+    if(Array.isArray(collection)){
+        // determine if func wasn't provided
+        if (func === undefined){
+            for(let i = 0; i < collection.length; i++){
+                if(collection[i]){
+                    return true;
+                }
+                return false;
+            }
+        } else { // else callback func
+            for(let i = 0; i < collection.length; i++){
+                if(func(collection[i], i, collection)){
+                    return true;
+                }
+            }
+            return false;
+        }
+    } else {
+        // determine if func wasn't provided
+        if (func === undefined){
+            for(let key in collection){
+                if(collection[key]){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else { // else callback func
+            for(let key in collection){
+                if(func(collection[key], key, collection)){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}
+
 
 /** _.reduce
  * 
@@ -649,6 +718,10 @@ E:
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+// _.reduce = function(){
+
+// }
+
 
 /** _.extend    // Object.assign
 * Arguments:
@@ -667,6 +740,20 @@ E:
 
 // _.extend = function(target, ...objects){
 
+// }
+
+/*
+
+I: target possibly multiple objects
+O: return target object with all object arguments added to it
+C: 
+E: 
+
+*/
+
+
+// _.extend = function(target, ...objects){
+    
 // }
 
 //////////////////////////////////////////////////////////////////////

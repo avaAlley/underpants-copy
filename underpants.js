@@ -526,11 +526,9 @@ E:
 
 
 _.pluck = function(array, property){
-    // let output = [];
-    return _.map(array, function(object){
+    return _.map(array, function(array){
         return array[property];
     });
-    // return output;
 };
 
 // _.pluck = function(array, property){
@@ -568,7 +566,7 @@ _.pluck = function(array, property){
 
 /*
 
-I: 
+I: a collection (array or object) and a function
 O: 
 C: 
 E: 
@@ -652,7 +650,7 @@ E:
 */
 
 
-/** _.extend
+/** _.extend    // Object.assign
 * Arguments:
 *   1) An Object
 *   2) An Object
@@ -666,6 +664,10 @@ E:
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+// _.extend = function(target, ...objects){
+
+// }
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
